@@ -2,29 +2,29 @@
 
 #include <iostream>
 
-using namespace std;
-
 int inputNumber()
 {
 	int abc = 0;
 
-	cout << "Input the three-digit number: " << endl;
-	cin >> abc;
+	std::cout << "Input the three-digit number: " << std::endl;
+	std::cin >> abc;
 
 	return abc;
 }
 
 int outputSum(int abc)
 {
-	int bc = abc % 100;
+	int bc = 0;
 
-	cout << "Sum of digits: " << endl;
-	cout << (abc / 100) + (bc / 10) + (bc % 10) << endl;
+	bc = abc % 100;
+
+	std::cout << "Sum of digits: " << std::endl;
+	std::cout << (abc / 100) + (bc / 10) + (bc % 10) << std::endl;
 
 	return EXIT_SUCCESS;
 }
 
-int main()
+ int main(int argc, char* argv[])
 {
 	outputSum(inputNumber());
 

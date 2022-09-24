@@ -2,14 +2,12 @@
 
 #include <iostream>
 
-using namespace std;
-
 int inputV()
 {
 	int V = 0;
 
-	cout << "V: " << endl;
-	cin >> V;
+	std::cout << "V: " << std::endl;
+	std::cin >> V;
 
 	return V;
 }
@@ -18,21 +16,21 @@ int inputT()
 {
 	int T = 0;
 
-	cout << "T: " << endl;
-	cin >> T;
+	std::cout << "T: " << std::endl;
+	std::cin >> T;
 
 	return T;
 }
 
 int outputPoint(int T, int V)
 {
-	cout << "Coordinate: " << endl;
-	cout << ((V * T) % 109 + 109) % 109 << endl;
+	std::cout << "Coordinate: " << std::endl;
+	std::cout << ((V * T) % 109 + 109) % 109 << std::endl;
 
 	return EXIT_SUCCESS;
 }
 
-int main()
+ int main(int argc, char* argv[])
 {
 	outputPoint(inputT(), inputV());
 

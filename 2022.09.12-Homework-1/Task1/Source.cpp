@@ -2,27 +2,25 @@
 
 #include <iostream>
 
-using namespace std;
-
 short inputNumber()
 {
 	short n = 0;
 
-	cout << "Enter the number [ -32768 ; 32767 ]: " << endl;
-	cin >> n;
+	std::cout << "Enter the number [ -32768 ; 32767 ]: " << std::endl;
+	std::cin >> n;
 
 	return n;
 }
 
 int outputNumber(short n)
 {
-	cout << "The next number for the number " << n << " is " << n + 1 << "." << endl;
-	cout <<	"The previous number for the number " << n << " is " << n - 1 << "." << endl;
+	std::cout << "The next number for the number " << n << " is " << n + 1 << "." << std::endl;
+	std::cout <<	"The previous number for the number " << n << " is " << n - 1 << "." << std::endl;
 
 	return EXIT_SUCCESS;
 }
 
-int main()
+ int main(int argc, char* argv[])
 {
 	outputNumber(inputNumber());
 

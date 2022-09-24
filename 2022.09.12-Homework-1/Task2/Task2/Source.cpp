@@ -2,14 +2,12 @@
 
 #include <iostream>
 
-using namespace std;
-
 int inputStudents()
 {
 	int students = 0;
 
-	cout << "Enter the number of students: " << endl;
-	cin >> students;
+	std::cout << "Enter the number of students: " << std::endl;
+	std::cin >> students;
 
 	return students;
 }
@@ -18,24 +16,27 @@ int inputApples()
 {
 	int apples = 0;
 
-	cout << "Enter the number of apples: " << endl;
-	cin >> apples;
+	std::cout << "Enter the number of apples: " << std::endl;
+	std::cin >> apples;
 
 	return apples;
 }
 
 int outputApplesPerStudent()
 {
-	int students = inputStudents(); // Documentation requires to ask students before apples
-	int apples = inputApples();
+	int students = 0;
+	int apples = 0;
 
-	cout << "Apples per one student: " << endl;
-	cout << apples / students << endl;
+	students = inputStudents(); // Documentation requires to ask students before apples
+	apples = inputApples();
+
+	std::cout << "Apples per one student: " << std::endl;
+	std::cout << apples / students << std::endl;
 
 	return EXIT_SUCCESS;
 }
 
-int main()
+ int main(int argc, char* argv[])
 {
 	outputApplesPerStudent();
 

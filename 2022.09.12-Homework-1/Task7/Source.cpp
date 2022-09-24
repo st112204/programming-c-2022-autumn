@@ -2,25 +2,23 @@
 
 #include <iostream>
 
-using namespace std;
-
-int main()
+ int main(int argc, char* argv[])
 {
 	int a = 0;
 	int b = 0;
 	int tmp = 0;
 
-	cout << "A: " << endl;
-	cin >> a;
-	cout << "B: " << endl;
-	cin >> b;
+	std::cout << "A: " << std::endl;
+	std::cin >> a;
+	std::cout << "B: " << std::endl;
+	std::cin >> b;
 
 	tmp = a;
 	a = b;
 	b = tmp;
 
-	cout << "Swapped variables: " << endl;
-	cout << a << " " << b << endl;
+	std::cout << "Swapped variables: " << std::endl;
+	std::cout << a << " " << b << std::endl;
 
 	return EXIT_SUCCESS;
 }
