@@ -1,29 +1,16 @@
-// Значение многочлена 4 степени за 2 умножения
+// Calculate the the value of 4 degree polynomial by only two multiplications
 
 #include <iostream>
 
-int inputX()
+int main(int argc, char* argv[])
 {
-	int x = 0;
+	 int x = 0;
+	 int xSqr = 0;
 
-	std::cout << "X: " << std::endl;
-	std::cin >> x;
-
-	return x;
-}
-
-int calculateP(int x)
-{
-	int xSqr = 0;
-
-	xSqr = x * x;
-
-	return (xSqr + 1) * (xSqr + x) + 1;
-}
-
- int main(int argc, char* argv[])
-{
-	std::cout << "x ^ 4 + x ^ 3 + x ^ 2 + x + 1 = \n" << calculateP(inputX()) << std::endl;
+	 std::cin >> x;
+	 xSqr = x * x;
+	 
+	std::cout << (xSqr + 1) * (xSqr + x) + 1 << std::endl;
 
 	return EXIT_SUCCESS;
 }

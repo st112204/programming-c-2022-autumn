@@ -1,419 +1,410 @@
-// Операция / , используя только операции + - *
+// Create the integer division operation using only + - *
 
 #include <iostream>
 
-int sign(int n)
-{
-	return (n >= 0) * 1 + (n < 0) * (-1);
-}
-
-int absolute(int n)
-{
-	return (n >= 0) * n + (n < 0) * (-n);
-}
-
-// output the binary representation of the int n
-unsigned int binary(unsigned int n)
-{	
-	std::cout << (n >> 31 & 1);
-	std::cout << (n >> 30 & 1);
-	std::cout << (n >> 29 & 1);
-	std::cout << (n >> 28 & 1);
-	std::cout << " ";
-	std::cout << (n >> 27 & 1);
-	std::cout << (n >> 26 & 1);
-	std::cout << (n >> 25 & 1);
-	std::cout << (n >> 24 & 1);
-	std::cout << " ";
-	std::cout << (n >> 23 & 1);
-	std::cout << (n >> 22 & 1);
-	std::cout << (n >> 21 & 1);
-	std::cout << (n >> 20 & 1);
-	std::cout << " ";
-	std::cout << (n >> 19 & 1);
-	std::cout << (n >> 18 & 1);
-	std::cout << (n >> 17 & 1);
-	std::cout << (n >> 16 & 1);
-	std::cout << " ";
-	std::cout << (n >> 15 & 1);
-	std::cout << (n >> 14 & 1);
-	std::cout << (n >> 13 & 1);
-	std::cout << (n >> 12 & 1);
-	std::cout << " ";
-	std::cout << (n >> 11 & 1);
-	std::cout << (n >> 10 & 1);
-	std::cout << (n >> 9 & 1);
-	std::cout << (n >> 8 & 1);
-	std::cout << " ";
-	std::cout << (n >> 7 & 1);
-	std::cout << (n >> 6 & 1);
-	std::cout << (n >> 5 & 1);
-	std::cout << (n >> 4 & 1);
-	std::cout << " ";
-	std::cout << (n >> 3 & 1);
-	std::cout << (n >> 2 & 1);
-	std::cout << (n >> 1 & 1);
-	std::cout << (n & 1);
-
-	return EXIT_SUCCESS;
-}
-
-// debugging and viewing binary calculations
-unsigned int checkValues(unsigned int a, unsigned int b, unsigned int c, int zeros, int iteration)
-{
-	std::cout << "     after iteration " << iteration << ":" << std::endl;
-
-	std::cout << "a = ";
-	binary(a);
-	std::cout << " = " << a << std::endl;
-
-	std::cout << "b = ";
-	binary(b);
-	std::cout << " = " << b << std::endl;
-
-	std::cout << "c = ";
-	binary(c);
-	std::cout << " = " << c << std::endl;
-
-	std::cout << "actual zeroes of b = " << zeros - 1 << "\n" << std::endl;
-
-	return EXIT_SUCCESS;
-}
-
-// used in normilize of divisor function
-unsigned int leadingZeros(unsigned int n)
-{
-	unsigned int d = 0;
-
-	d += (n >> 31 & 1) * 32;
-	d += (n >> 30 & 1) * 31 * !d;
-	d += (n >> 29 & 1) * 30 * !d;
-	d += (n >> 28 & 1) * 29 * !d;
-	d += (n >> 27 & 1) * 28 * !d;
-	d += (n >> 26 & 1) * 27 * !d;
-	d += (n >> 25 & 1) * 26 * !d;
-	d += (n >> 24 & 1) * 25 * !d;
-	d += (n >> 23 & 1) * 24 * !d;
-	d += (n >> 22 & 1) * 23 * !d;
-	d += (n >> 21 & 1) * 22 * !d;
-	d += (n >> 20 & 1) * 21 * !d;
-	d += (n >> 19 & 1) * 20 * !d;
-	d += (n >> 18 & 1) * 19 * !d;
-	d += (n >> 17 & 1) * 18 * !d;
-	d += (n >> 16 & 1) * 17 * !d;
-	d += (n >> 15 & 1) * 16 * !d;
-	d += (n >> 14 & 1) * 15 * !d;
-	d += (n >> 13 & 1) * 14 * !d;
-	d += (n >> 12 & 1) * 13 * !d;
-	d += (n >> 11 & 1) * 12 * !d;
-	d += (n >> 10 & 1) * 11 * !d;
-	d += (n >> 9 & 1) * 10 * !d;
-	d += (n >> 8 & 1) * 9 * !d;
-	d += (n >> 7 & 1) * 8 * !d;
-	d += (n >> 6 & 1) * 7 * !d;
-	d += (n >> 5 & 1) * 6 * !d;
-	d += (n >> 4 & 1) * 5 * !d;
-	d += (n >> 3 & 1) * 4 * !d;
-	d += (n >> 2 & 1) * 3 * !d;
-	d += (n >> 1 & 1) * 2 * !d;
-	d += (n & 1) * !d;
-
-	return 32 - d;
-}
-
-unsigned int division(unsigned int a, unsigned int b)
-{
-	unsigned int c = 0;
-	unsigned int b0 = 0;
-	int zeros = 0;
-	int iteration = 0;
-
-	b0 = b;
-	zeros = leadingZeros(b);
-	b = b << zeros;
-	zeros++;
-
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	iteration++;
-	c = c << (zeros > 0);
-	c += (a >= b) & (zeros > 0);
-	a -= (a >= b) * b;
-	b = b >> 1;
-	zeros -= (zeros > 0);
-	checkValues(a, b, c, zeros, iteration);
-
-	return c;
-}
-
  int main(int argc, char* argv[])
+{
+	short a = 0;
+	short b = 0;
+	unsigned short absA = 0;
+	unsigned short absB = 0;
+	short signA = 0;
+	short signB = 0;
+	unsigned short z = 0;
+	unsigned short absC = 0;
+
+	std::cin >> a >> b;
+
+	absA = (a >= 0) * a + (a < 0) * (-a);
+	absB = (b >= 0) * b + (b < 0) * (-b);
+
+	signA = 1 * (a >= 0) + (-1) * (a < 0);
+	signB = 1 * (b >= 0) + (-1) * (b < 0);
+
+	z += (absB >> 15 & 1) * 16 * !z;
+	z += (absB >> 14 & 1) * 15 * !z;
+	z += (absB >> 13 & 1) * 14 * !z;
+	z += (absB >> 12 & 1) * 13 * !z;
+	z += (absB >> 11 & 1) * 12 * !z;
+	z += (absB >> 10 & 1) * 11 * !z;
+	z += (absB >> 9 & 1) * 10 * !z;
+	z += (absB >> 8 & 1) * 9 * !z;
+	z += (absB >> 7 & 1) * 8 * !z;
+	z += (absB >> 6 & 1) * 7 * !z;
+	z += (absB >> 5 & 1) * 6 * !z;
+	z += (absB >> 4 & 1) * 5 * !z;
+	z += (absB >> 3 & 1) * 4 * !z;
+	z += (absB >> 2 & 1) * 3 * !z;
+	z += (absB >> 1 & 1) * 2 * !z;
+	z += (absB & 1) * !z;
+
+	z = 16 - z;
+
+	absB = absB << z; // normalization
+	z++;
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	absC = absC << (z > 0);
+	absC += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	std::cout << signA * signB * (short)absC << std::endl;
+	std::cout << "check: " << a / b << std::endl;
+
+	return EXIT_SUCCESS;
+}
+
+
+// same solution for int type
+/*
+int main(int argc, char* argv[])
 {
 	int a = 0;
 	int b = 0;
+	unsigned int absA = 0;
+	unsigned int absB = 0;
+	char signA = 0;
+	char signB = 0;
+	unsigned int c = 0; // the result
+	unsigned int z = 0; // normalizator
 
-	std::cout << "Input a is integer belongs to [ - 2 147 483 647 ; 2 147 483 647 ] without spaces pls: ";
-	std::cin >> a;
-	std::cout << "Input b != 0, the same requirements: ";
-	std::cin >> b;
-	std::cout << "\n Нow it works: \n" << std::endl;
+	std::cin >> a >> b;
 
-	std::cout << "      my a / b = " << sign(a) * sign(b) * (int)division(absolute(a), absolute(b)) << std::endl;
-	std::cout << "standard a / b = " << a / b << std::endl;
+	absA = (a >= 0) * a + (a < 0) * (-a);
+	absB = (b >= 0) * b + (b < 0) * (-b);
+
+	signA = 1 * (a >= 0) + (-1) * (a < 0);
+	signB = 1 * (b >= 0) + (-1) * (b < 0);
+
+	z += (absB >> 31 & 1) * 32;
+	z += (absB >> 30 & 1) * 31 * !z;
+	z += (absB >> 29 & 1) * 30 * !z;
+	z += (absB >> 28 & 1) * 29 * !z;
+	z += (absB >> 27 & 1) * 28 * !z;
+	z += (absB >> 26 & 1) * 27 * !z;
+	z += (absB >> 25 & 1) * 26 * !z;
+	z += (absB >> 24 & 1) * 25 * !z;
+	z += (absB >> 23 & 1) * 24 * !z;
+	z += (absB >> 22 & 1) * 23 * !z;
+	z += (absB >> 21 & 1) * 22 * !z;
+	z += (absB >> 20 & 1) * 21 * !z;
+	z += (absB >> 19 & 1) * 20 * !z;
+	z += (absB >> 18 & 1) * 19 * !z;
+	z += (absB >> 17 & 1) * 18 * !z;
+	z += (absB >> 16 & 1) * 17 * !z;
+	z += (absB >> 15 & 1) * 16 * !z;
+	z += (absB >> 14 & 1) * 15 * !z;
+	z += (absB >> 13 & 1) * 14 * !z;
+	z += (absB >> 12 & 1) * 13 * !z;
+	z += (absB >> 11 & 1) * 12 * !z;
+	z += (absB >> 10 & 1) * 11 * !z;
+	z += (absB >> 9 & 1) * 10 * !z;
+	z += (absB >> 8 & 1) * 9 * !z;
+	z += (absB >> 7 & 1) * 8 * !z;
+	z += (absB >> 6 & 1) * 7 * !z;
+	z += (absB >> 5 & 1) * 6 * !z;
+	z += (absB >> 4 & 1) * 5 * !z;
+	z += (absB >> 3 & 1) * 4 * !z;
+	z += (absB >> 2 & 1) * 3 * !z;
+	z += (absB >> 1 & 1) * 2 * !z;
+	z += (absB & 1) * !z;
+
+	z = 32 - z;
+
+	absB = absB << z;
+	z++;
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	c = c << (z > 0);
+	c += (absA >= absB) & (z > 0);
+	absA -= (absA >= absB) * absB;
+	absB = absB >> 1;
+	z -= (z > 0);
+
+	std::cout << signA * signB * (int)c << std::endl;
+	std::cout << "check: " << a / b << std::endl;
 
 	return EXIT_SUCCESS;
 }
+*/
 
-
-
-//old solution with powers of 2
+// old solution using powers of 2
 /*
 int inputA()
 {

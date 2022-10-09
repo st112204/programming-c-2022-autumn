@@ -1,4 +1,4 @@
-// Поменять переменные местами
+// Swap variables
 
 #include <iostream>
 
@@ -8,16 +8,12 @@
 	int b = 0;
 	int tmp = 0;
 
-	std::cout << "A: " << std::endl;
-	std::cin >> a;
-	std::cout << "B: " << std::endl;
-	std::cin >> b;
+	std::cin >> a >> b;
 
 	tmp = a;
 	a = b;
 	b = tmp;
 
-	std::cout << "Swapped variables: " << std::endl;
 	std::cout << a << " " << b << std::endl;
 
 	return EXIT_SUCCESS;

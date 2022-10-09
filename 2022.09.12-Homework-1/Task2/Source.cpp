@@ -1,4 +1,4 @@
-// Apples are left
+// Apples per one student
 
 #include <iostream>
 
@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 
 	std::cin >> students >> apples;
 
-	std::cout << apples % students << std::endl;
+	std::cout << apples / students << std::endl;
 
 	return EXIT_SUCCESS;
 }
