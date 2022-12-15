@@ -1,6 +1,36 @@
 #include <iostream>
 #include <stdio.h>
 
+void init(int** mas, int n, int i);
+void border(int** mas, int n, int i, int j);
+void out(int** mas, int n, int i, int j);
+void del(int** mas, int n, int i);
+int move(int m);
+void spiral(int** mas, int n, int value, int m, int i, int j);
+
+
+int main(int argc, char* argv[])
+{
+	int n = 0;
+	int** mas = nullptr;
+
+	std::cin >> n;
+
+	mas = new int* [n + 2] { nullptr };
+	init(mas, n + 2, 0);
+	border(mas, n + 2, 0, 0);
+
+	spiral(mas, n, 1, 0, 1, 1);
+
+	out(mas, n + 1, 1, 1);
+
+	del(mas, n + 2, 0);
+	delete[] mas;
+
+	return EXIT_SUCCESS;
+}
+
+
 void init(int** mas, int n, int i)
 {
 	if (i == n)
@@ -130,26 +160,4 @@ void spiral(int** mas, int n, int value, int m, int i, int j)
 			spiral(mas, n, value + 1, m, i - 1, j);
 		}
 	}
-}
-
-
-int main(int argc, char* argv[])
-{
-	int n = 0;
-	int** mas = nullptr;
-
-	std::cin >> n;
-
-	mas = new int* [n + 2] { nullptr };
-	init(mas, n + 2, 0);
-	border(mas, n + 2, 0, 0);
-
-	spiral(mas, n, 1, 0, 1, 1);
-
-	out(mas, n + 1, 1, 1);
-
-	del(mas, n + 2, 0);
-	delete[] mas;
-
-	return EXIT_SUCCESS;
 }
