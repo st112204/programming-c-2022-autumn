@@ -1,5 +1,7 @@
+// Shape, Rectangle, Triangle, Circle, Square
+
 #include <iostream>
-//rectangle triangle circle square
+
 struct Shape
 {
 public:

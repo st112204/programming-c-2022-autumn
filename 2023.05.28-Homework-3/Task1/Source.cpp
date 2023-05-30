@@ -1,18 +1,18 @@
-#include <iostream>
+// points sort
 
-//sort points
+#include <iostream>
 
 struct Point {
 	int x;
 	int y;
 
-	Point(int x = 0, int y = 0) : x(x), y(y) {} //create
+	Point(int x = 0, int y = 0) : x(x), y(y) {}
 
-	Point(const Point& m) : //copy
+	Point(const Point& m) :
 		x(m.x),
 		y(m.y) {}
 
-	~Point() {}; //destr
+	~Point() {};
 
 	double Distance()
 	{
@@ -33,14 +33,14 @@ int main(int argc, char* argv[])
 
 	Point* a = (Point*)malloc(n * sizeof(Point));
 
-	for (int i = 0; i < n; ++i) //input
+	for (int i = 0; i < n; ++i)
 	{
 		Point point;
 		std::cin >> point.x >> point.y;
 		a[i] = point;
 	}
 
-	for (int i = 0; i < n; ++i) //sort
+	for (int i = 0; i < n; ++i)
 	{
 		for (int j = n - 1; j > i; --j)
 		{
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	for (int i = 0; i < n; ++i) //output
+	for (int i = 0; i < n; ++i)
 	{
 		a[i].PrPoint();
 	}

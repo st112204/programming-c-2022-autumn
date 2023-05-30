@@ -1,3 +1,5 @@
+// sort by avarage
+
 #include <iostream>
 #include <string>
 
@@ -10,7 +12,7 @@ private:
 	int m3;
 public:
 
-	Student(std::string name = "Vasya", std::string surname = "Proshin", int m1 = 0, int m2 = 0, int m3 = 0) :
+	Student(std::string name = "Igor", std::string surname = "Korovin", int m1 = 0, int m2 = 0, int m3 = 0) :
 		name(name), surname(surname), m1(m1), m2(m2), m3(m3) {};
 
 	Student(const Student& st) :
@@ -53,7 +55,7 @@ int main(int argc, char* argv[])
 		st[i] = Student(name, sname, m, inf, ph);
 	}
 
-	for (int i = 0; i < n; ++i) //sort
+	for (int i = 0; i < n; ++i)
 	{
 		for (int j = n - 1; j > i; --j)
 		{
