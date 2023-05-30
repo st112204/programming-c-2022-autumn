@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{632294c4-5918-4a24-b313-a0e6412fc192}</ProjectGuid>
+    <ProjectGuid>{d3c3291a-0adb-4a8e-8a51-afc8c2c45c93}</ProjectGuid>
     <RootNamespace>My20230528Homework2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -127,12 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Animal.h" />
-    <ClInclude Include="List.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Animal.cpp" />
-    <ClCompile Include="List.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
